@@ -1,0 +1,362 @@
+[
+    {
+        "question": "Solve for k in the equation \\(\\frac{1}{8}^{k+2}\\) = 1",
+        "option_a": "A.\r\n            2",
+        "option_b": "B.\r\n            -4",
+        "option_c": "C.\r\n            -2",
+        "option_d": "D.\r\n            4",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "Evaluate\u00a0\\((101_{two})^3\\)",
+        "option_a": "A.\r\n            \\(111101_{two}\\)",
+        "option_b": "B.\r\n            \\(11111101_{two}\\)",
+        "option_c": "C.\r\n            \\(1111101_{two}\\)",
+        "option_d": "D.\r\n            \\(11001_{two}\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "",
+        "option_a": "A.\r\n            F - (E n F) - (G n F)",
+        "option_b": "B.\r\n            E' n F n G'",
+        "option_c": "C.\r\n            E u F u G",
+        "option_d": "D.\r\n            F",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "If a fair coin is tossed twice, what is the probability of obtaining at least one head?",
+        "option_a": "A.\r\n            0.25",
+        "option_b": "B.\r\n            0.75",
+        "option_c": "C.\r\n            0.5",
+        "option_d": "D.\r\n            0.33",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "If the mean of 2, 5, (x+1), (x+2), 7 and 9 is 6. Find the median",
+        "option_a": "A.\r\n            5.5",
+        "option_b": "B.\r\n            5",
+        "option_c": "C.\r\n            6.5",
+        "option_d": "D.\r\n            6",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "If sin\u00a0\u03b8 = -\u00a0 \\(\\frac{3}{5}\\) and\u00a0\u03b8 lies in the third quadrant, find cos\u00a0\u03b8",
+        "option_a": "A.\r\n            \\(\\frac{4}{5}\\)",
+        "option_b": "B.\r\n            - \\(\\frac{5}{4}\\)",
+        "option_c": "C.\r\n            \\(\\frac{5}{4}\\)",
+        "option_d": "D.\r\n            - \\(\\frac{4}{5}\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "Simplify \\(\\frac{1}{3-\u221a2}\\) in the form of p + q\u221a2",
+        "option_a": "A.\r\n            \\(\\frac{7}{3}\\) - \\(\\frac{1}{7\u221a2}\\)",
+        "option_b": "B.\r\n            \\(\\frac{7}{3}\\) + \\(\\frac{1}{7\u221a2}\\)",
+        "option_c": "C.\r\n            \\(\\frac{3}{7}\\) - \\(\\frac{1}{7\u221a2}\\)",
+        "option_d": "D.\r\n            \\(\\frac{3}{7}\\) + \\(\\frac{\u221a2}{7}\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "Find the length of a chord 3cm from the centre of a circle of radius 5cm",
+        "option_a": "A.\r\n            8cm",
+        "option_b": "B.\r\n            5.6cm",
+        "option_c": "C.\r\n            7cm",
+        "option_d": "D.\r\n            6.5cm",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "Mr Adu spends his annual salary on food(f), rent(r), car maintenance, gifts(g), savings(s) and some miscellaneous (m) as indicate in the table below:\r\n\r\n\r\n\t\r\n\t\t\r\n\t\t\tF\r\n\t\t\tR\r\n\t\t\tC\r\n\t\t\tG\r\n\t\t\tS\r\n\t\t\tM\r\n\t\t\r\n\t\t\r\n\t\t\t28%\r\n\t\t\t15%\r\n\t\t\t20%\r\n\t\t\t14%\r\n\t\t\t10%\r\n\t\t\t13%\r\n\t\t\r\n\t\r\n\r\n\r\nIf the above information is represented on a pie chart. What angle represents his spending on food?",
+        "option_a": "A.\r\n            108.5",
+        "option_b": "B.\r\n            100.8",
+        "option_c": "C.\r\n            98.8",
+        "option_d": "D.\r\n            120.5",
+        "option_e": "D.\r\n            120.5",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "A rectangular pyramid has an area 24cm\\(^2\\) and height 7.5cm. Find its volume?",
+        "option_a": "A.\r\n            65.0cm\\(^3\\)",
+        "option_b": "B.\r\n            70.5cm\\(^3\\)",
+        "option_c": "C.\r\n            56.5cm\\(^3\\)",
+        "option_d": "D.\r\n            60.0cm\\(^3\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "The 10th term of an AP is 32. If the first term is 3/2, what is the 4th term?",
+        "option_a": "A.\r\n            35/3",
+        "option_b": "B.\r\n            64",
+        "option_c": "C.\r\n            16",
+        "option_d": "D.\r\n            35/2",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "",
+        "option_a": "A.\r\n            180\u00ba - g\u00ba - h\u00ba",
+        "option_b": "B.\r\n            360\u00ba - (g-h)\u00ba",
+        "option_c": "C.\r\n            180\u00ba - (g-h)\u00ba",
+        "option_d": "D.\r\n            360\u00ba - g\u00ba - h\u00ba",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "In how many ways can the letter of ZOOLOGY be arranged?",
+        "option_a": "A.\r\n            720",
+        "option_b": "B.\r\n            360",
+        "option_c": "C.\r\n            840",
+        "option_d": "D.\r\n            120",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "Integrate (2x+1)\\(^3\\)",
+        "option_a": "A.\r\n            \\(\\frac{{2x+1}^3}{8}\\) + C",
+        "option_b": "B.\r\n            \\(\\frac{{2x+1}^4}{8}\\) + C",
+        "option_c": "C.\r\n            \\(\\frac{{2x+1}^4}{4}\\) + C",
+        "option_d": "D.\r\n            \\(\\frac{{2x+1}^2}{6}\\) + C",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "If A =\u00a0\\(\\begin{pmatrix} 2\u00a0& 1\u00a0\\\\ 2\u00a0& 3 \\\\ 1 & 2\u00a0\\end{pmatrix}\\) and B =\u00a0\\(\\begin{pmatrix} 3\u00a0& 2\u00a0\\\\ 4\u00a0& 2\u00a0\\end{pmatrix}\\). Find AB",
+        "option_a": "A.\r\n            \\(\\begin{pmatrix} 18\u00a0& 6\u00a0\\\\ 12\u00a0& 10 \\\\ 10 & 6\u00a0\\end{pmatrix}\\)",
+        "option_b": "B.\r\n            \\(\\begin{pmatrix} 10\u00a0& 6\u00a0\\\\ 13\u00a0& 10 \\\\ 12 & 6\u00a0\\end{pmatrix}\\)",
+        "option_c": "C.\r\n            \\(\\begin{pmatrix} 10\u00a0& 6\u00a0\\\\ 12\u00a0& 10 \\\\ 11 & 6\u00a0\\end{pmatrix}\\)",
+        "option_d": "D.\r\n            \\(\\begin{pmatrix} 10\u00a0& 6\u00a0\\\\ 18\u00a0& 10 \\\\ 11 & 6\u00a0\\end{pmatrix}\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "Given that r =\u00a0\\( \\sqrt\u00a0\\frac{3v}{\\pi\u00a0h} \\), make v the subject of the formula",
+        "option_a": "A.\r\n            v = 3\u00a0\\(\u03c0r^2\\) h",
+        "option_b": "B.\r\n            v = \\(\\frac{\u03c0rh}{3}\\)",
+        "option_c": "C.\r\n            v = \u00a0\\(\\frac{\u03c0r^2h}{3}\\)",
+        "option_d": "D.\r\n            v = 3\u03c0rh",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "Find the determinant of the matrix A =\u00a0\\(\\begin{pmatrix} 2\u00a0& 3\u00a0\\\\ 1\u00a0& 3\u00a0\\end{pmatrix}\\)",
+        "option_a": "A.\r\n            4",
+        "option_b": "B.\r\n            2",
+        "option_c": "C.\r\n            5",
+        "option_d": "D.\r\n            3",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "Evaluate Log\\(_2\\) 8\u221a2",
+        "option_a": "A.\r\n            3.0",
+        "option_b": "B.\r\n            4.5",
+        "option_c": "C.\r\n            3.5",
+        "option_d": "D.\r\n            2.5",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "The locus of points\u00a0equidistant from a fixed point.",
+        "option_a": "A.\r\n            circle",
+        "option_b": "B.\r\n            perpendicular lines",
+        "option_c": "C.\r\n            straight line",
+        "option_d": "D.\r\n            bisector",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "What will be the result obtained when the numerator of \\(\\frac{96}{50}\\) is decreased by 37.5% and its denominator decreased by 20%.",
+        "option_a": "A.\r\n            1.5",
+        "option_b": "B.\r\n            \\(\\frac{5}{2}\\)",
+        "option_c": "C.\r\n            \\(\\frac{96}{48}\\)",
+        "option_d": "D.\r\n            0.5",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "A poultry farmer realized 200 eggs from his birds and sold 5 \\(\\frac{1}{2}\\) crates of eggs. What percentages of eggs are left?",
+        "option_a": "A.\r\n            82.5%",
+        "option_b": "B.\r\n            15%",
+        "option_c": "C.\r\n            17.5%",
+        "option_d": "D.\r\n            85%",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "If sec\\(^2\\)\u03b8 + tan\\(^2\\)\u03b8 = 3, then the angle\u00a0\u03b8 is equal to?",
+        "option_a": "A.\r\n            90\u00ba",
+        "option_b": "B.\r\n            30\u00ba",
+        "option_c": "C.\r\n            45\u00ba",
+        "option_d": "D.\r\n            60\u00ba",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "find the limit of y = \\(\\frac{x^3 + 6x - 7}{x-1}\\) as x tends to 1",
+        "option_a": "A.\r\n            9",
+        "option_b": "B.\r\n            8",
+        "option_c": "C.\r\n            0",
+        "option_d": "D.\r\n            7",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "Find the equation of a straight line parallel to the line 2x - y = 5 and having intercept of 5",
+        "option_a": "A.\r\n            2x + y = 5",
+        "option_b": "B.\r\n            2x + y = -5",
+        "option_c": "C.\r\n            2x - y = -5",
+        "option_d": "D.\r\n            2x - y = 5",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "Calculate the median of 14, 17, 10, 13, 18 and 10.",
+        "option_a": "A.\r\n            12.5",
+        "option_b": "B.\r\n            13.5",
+        "option_c": "C.\r\n            13.2",
+        "option_d": "D.\r\n            14.5",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "The equivalent of (10110.011)\\(_2\\) in base 10 is?",
+        "option_a": "A.\r\n            26.325",
+        "option_b": "B.\r\n            24.372",
+        "option_c": "C.\r\n            42.443",
+        "option_d": "D.\r\n            22.375",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "The cost C of running a school is directly proportional to the number of students N, if 20 students cost #10,000, How many students can #1,000,000 cover?",
+        "option_a": "A.\r\n            3000",
+        "option_b": "B.\r\n            1000",
+        "option_c": "C.\r\n            2000",
+        "option_d": "D.\r\n            4000",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "The coordinates of the mid-point of the line joining the points (-3,5) and (2,10) is given by?",
+        "option_a": "A.\r\n            ( \\(\\frac{1}{2}\\), \\(\\frac{15}{2}\\) )",
+        "option_b": "B.\r\n            ( \\(\\frac{1}{2}\\), \\(\\frac{-15}{2}\\) )",
+        "option_c": "C.\r\n            ( \\(\\frac{-1}{2}\\), \\(\\frac{-15}{2}\\) )",
+        "option_d": "D.\r\n            ( \\(\\frac{-1}{2}\\), \\(\\frac{15}{2}\\) )",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "Evaluate \\(^{n^2 + 1}\\)C\\(_{n+5}\\) if n = 3",
+        "option_a": "A.\r\n            55",
+        "option_b": "B.\r\n            45",
+        "option_c": "C.\r\n            35",
+        "option_d": "D.\r\n            25",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "Given that S =\u00a0\\(3t^{2}\\) + 5t - 10 is displacement of a particle in metres, calculate it initial velocity.",
+        "option_a": "A.\r\n            10m/s",
+        "option_b": "B.\r\n            2m/s",
+        "option_c": "C.\r\n            5m/s",
+        "option_d": "D.\r\n            6m/s",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "",
+        "option_a": "A.\r\n            9cm",
+        "option_b": "B.\r\n            3.4cm",
+        "option_c": "C.\r\n            9.1cm",
+        "option_d": "D.\r\n            3cm",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "Let (*) be a binary operation on a natural number defined by a * b = a - b + (ab)\\(^2\\), then find 3 * 5",
+        "option_a": "A.\r\n            223",
+        "option_b": "B.\r\n            232",
+        "option_c": "C.\r\n            32",
+        "option_d": "D.\r\n            -232",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "If y varies inversely as x and x = 3 when y =4. Find the value of x when y = 12",
+        "option_a": "A.\r\n            4",
+        "option_b": "B.\r\n            1",
+        "option_c": "C.\r\n            2",
+        "option_d": "D.\r\n            3",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "If 8, p, q and 26 is an A.P. Find the values of p and q",
+        "option_a": "A.\r\n            p = 14 and q = 14",
+        "option_b": "B.\r\n            p = 20 and q = 14",
+        "option_c": "C.\r\n            p = 20 and q = 20",
+        "option_d": "D.\r\n            p = 14 and q = 20",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "Find x if the mean of 2x, 4x, 2x -\u00a013 and 6x is 4.",
+        "option_a": "A.\r\n            1.5",
+        "option_b": "B.\r\n            2.0",
+        "option_c": "C.\r\n            1.0",
+        "option_d": "D.\r\n            0.5",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "Factorize 4a\\(^2\\) - 9b\\(^2\\)",
+        "option_a": "A.\r\n            (2a-3b) (2a+3b)",
+        "option_b": "B.\r\n            (2a-b) (2a+3b)",
+        "option_c": "C.\r\n            (2a-3b) (a+3b)",
+        "option_d": "D.\r\n            (a-3b) (a+3b)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "If n(P) = 20 and n(Q) = 30 and n(PuQ) = 40, find the value n(PnQ)",
+        "option_a": "A.\r\n            10",
+        "option_b": "B.\r\n            30",
+        "option_c": "C.\r\n            15",
+        "option_d": "D.\r\n            40",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "Three times a certain number (x), minus 2 is less than the number minus 6.Find the possible values of x.",
+        "option_a": "A.\r\n            x <-2",
+        "option_b": "B.\r\n            x>2",
+        "option_c": "C.\r\n            x>-2",
+        "option_d": "D.\r\n            x<2",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "",
+        "option_a": "A.\r\n            x\u22642",
+        "option_b": "B.\r\n            x<2",
+        "option_c": "C.\r\n            x\u22652",
+        "option_d": "D.\r\n            x>2",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "If a dress is sold for #3800.00 at 20% discount. what is its original price?",
+        "option_a": "A.\r\n            #3,000.00",
+        "option_b": "B.\r\n            #4,000.00",
+        "option_c": "C.\r\n            #5,000.00",
+        "option_d": "D.\r\n            #4,750.00",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    }
+]

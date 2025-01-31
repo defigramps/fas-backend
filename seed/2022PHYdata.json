@@ -1,0 +1,362 @@
+[
+    {
+        "question": "Which of these is a derived unit?",
+        "option_a": "A.\r\n            Kilogram",
+        "option_b": "B.\r\n            Metre",
+        "option_c": "C.\r\n            Newton",
+        "option_d": "D.\r\n            Second",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "A bar magnet is divided into two pieces, which of the following statement is correct?",
+        "option_a": "A.\r\n            two new magnets are created",
+        "option_b": "B.\r\n            the magnetic field of each separate piece becomes stronger",
+        "option_c": "C.\r\n            the electric field is created",
+        "option_d": "D.\r\n            the bar magnet is demagnetized",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "Consider the wave equation y = 5mm sin [1cm\\(^{-1}\\)x - 60s\\(^{-1}\\)t]. The wave number is?",
+        "option_a": "A.\r\n            0.1 cm\\(^{-1}\\)",
+        "option_b": "B.\r\n            10cm\\(^{-1}\\)",
+        "option_c": "C.\r\n            1.0cm\\(^{-1}\\)",
+        "option_d": "D.\r\n            2cm\\(^{-1}\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "An object 40 cm high is 30cm from the pin hole camera. If the height of the image formed is 20 cm. What is the distance of the image from the pin height?",
+        "option_a": "A.\r\n            15 cm",
+        "option_b": "B.\r\n            70 cm",
+        "option_c": "C.\r\n            40 cm",
+        "option_d": "D.\r\n            40 cm",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "A bar magnet is placed near and lying along the axis of a solenoid connected to a galvanometer. The pointer of the galvanometer shows no deflection when?",
+        "option_a": "A.\r\n            the magnet is moved towards the stationary solenoid",
+        "option_b": "B.\r\n            there is no relative motion",
+        "option_c": "C.\r\n            the magnet is moved away from the stationary solenoid",
+        "option_d": "D.\r\n            the solenoid is moved away from the stationary magnet",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "Tyres are treaded to?",
+        "option_a": "A.\r\n            increase weight of tyres",
+        "option_b": "B.\r\n            increase friction",
+        "option_c": "C.\r\n            increase its longevity",
+        "option_d": "D.\r\n            look good",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "A car\u00a0starts from rest and covers a distance of 40 m in 10 s. Calculate\u00a0the magnitude of its acceleration",
+        "option_a": "A.\r\n            3.20 ms\\(^{-2}\\)",
+        "option_b": "B.\r\n            0.25 ms\\(^{-2}\\)",
+        "option_c": "C.\r\n            0.80 ms\\(^{-2}\\)",
+        "option_d": "D.\r\n            4.00 ms\\(^{-2}\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "The relationship between the coefficient of linear expansion \\(\\alpha\\) and volumetric expansion (\\(\\gamma\\)) is-----------------",
+        "option_a": "A.\r\n            \\(\\gamma\\) = \\(\\alpha ^{-3}\\)",
+        "option_b": "B.\r\n            \\(\\gamma\\) = \\(\\alpha\\)",
+        "option_c": "C.\r\n            3\\(\\alpha\\)",
+        "option_d": "D.\r\n            \\(\\gamma\\) = \\(\\alpha ^{3}\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "Which of the following is not a consequence of hydrogen bubbles covering the copper plate of a primary cell?",
+        "option_a": "A.\r\n            formation of hydrogen bubbles on the electrode",
+        "option_b": "B.\r\n            increase in the resistance of the cell",
+        "option_c": "C.\r\n            local action",
+        "option_d": "D.\r\n            polarization",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "A cell whose internal resistance is 0.55\\(\\Omega\\) delivers a current of 4 A to an external resistor. The lost voltage of the cell is?",
+        "option_a": "A.\r\n            4.00 V",
+        "option_b": "B.\r\n            2.20 V",
+        "option_c": "C.\r\n            0.15 V",
+        "option_d": "D.\r\n            8.00 V",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "Which of the following liquid is a poor conductor of electricity?",
+        "option_a": "A.\r\n            Distilled water",
+        "option_b": "B.\r\n            Tap water",
+        "option_c": "C.\r\n            Sea water",
+        "option_d": "D.\r\n            Drinking water",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "An isotope has an initial activity of 120 Bq. 6 days later its activity is 15 Bq. The half-life is?",
+        "option_a": "A.\r\n            3 days",
+        "option_b": "B.\r\n            2 days",
+        "option_c": "C.\r\n            1 day",
+        "option_d": "D.\r\n            4 days",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "The secondary pigments consist of?",
+        "option_a": "A.\r\n            blue, green, and violet",
+        "option_b": "B.\r\n            yellow, green, and magenta",
+        "option_c": "C.\r\n            magenta, yellow, and cyan",
+        "option_d": "D.\r\n            red, green, and blue",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "A person standing waist-deep in a swimming pool appears to have short legs because of light?",
+        "option_a": "A.\r\n            diffraction",
+        "option_b": "B.\r\n            refraction",
+        "option_c": "C.\r\n            reflection",
+        "option_d": "D.\r\n            interference",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "A tuning fork having a frequency of 312 Hz emits a wave which has a wavelength of 1.10 m. Calculate the velocity of sound",
+        "option_a": "A.\r\n            312.0 ms\\(^{-1}\\)",
+        "option_b": "B.\r\n            110.0 ms\\(^{-1}\\)",
+        "option_c": "C.\r\n            343.2 ms\\(^{-1}\\)",
+        "option_d": "D.\r\n            686.4 ms\\(^{-1}\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "When the plate area of a capacitor increases?",
+        "option_a": "A.\r\n            the voltage can withstand increase",
+        "option_b": "B.\r\n            the capacitance decreases",
+        "option_c": "C.\r\n            the capacitance is unaffected",
+        "option_d": "D.\r\n            the capacitance increases",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "A magnet relay is a device used for?",
+        "option_a": "A.\r\n            reading the magnitude of magnetic flux",
+        "option_b": "B.\r\n            controlling another circuit carrying larger current",
+        "option_c": "C.\r\n            turning in sports",
+        "option_d": "D.\r\n            storing magnetic field",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option B"
+    },
+    {
+        "question": "According to kinetic molecular model in gases,",
+        "option_a": "A.\r\n            the particles are closely packed together; they occupy minimum space are usually arranged in a regular pattern",
+        "option_b": "B.\r\n            the particles vibrate about fixed positions and are held together by the strong intermolecular bonds between them",
+        "option_c": "C.\r\n            the molecules are very far apart and occupy all the spaces made available to them",
+        "option_d": "D.\r\n            the particles occur in clusters with molecules slightly further apart",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "A current of 0.5 A flows through a resistor when connected to a 40 V battery. How much energy is dispatched in 2 minutes?",
+        "option_a": "A.\r\n            2400 J",
+        "option_b": "B.\r\n            9600 J",
+        "option_c": "C.\r\n            1500 J",
+        "option_d": "D.\r\n            1200 J",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "",
+        "option_a": "A.\r\n            X",
+        "option_b": "B.\r\n            Z",
+        "option_c": "C.\r\n            Y",
+        "option_d": "D.\r\n            K",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "The vapour pressure?",
+        "option_a": "A.\r\n            increases non-linearly with measuring temperature",
+        "option_b": "B.\r\n            increases linearly with increasing temperature",
+        "option_c": "C.\r\n            decreases linearly with increasing temperature",
+        "option_d": "D.\r\n            decreases non-linearly ith measuring temperature",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "The potential energy in an elastic string of force constant k, which has an extension X is?",
+        "option_a": "A.\r\n            kX",
+        "option_b": "B.\r\n            KX\\(^{2}\\)",
+        "option_c": "C.\r\n            \u00bdKX\\(^{2}\\)",
+        "option_d": "D.\r\n            \u00bdK",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "A reservoir is filled with liquid of density 2000 kgm\\(^{-1}\\). Calculate the depth at which the pressure in the liquid will be equal to 9100 Nm\\(^{-2}\\) (g = 10 ms\\(^{-2}\\))",
+        "option_a": "A.\r\n            0.262 m",
+        "option_b": "B.\r\n            0.664 m",
+        "option_c": "C.\r\n            0.819 m",
+        "option_d": "D.\r\n            0.455 m",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "Water is not a good thermometric liquid because it?",
+        "option_a": "A.\r\n            expands unevenly between 0 \u00baC and 4 \u00baC",
+        "option_b": "B.\r\n            maintains fixed density",
+        "option_c": "C.\r\n            has low freezing point",
+        "option_d": "D.\r\n            wets glass",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "Which of these is\u00a0a second-class lever?",
+        "option_a": "A.\r\n            sugar tongs",
+        "option_b": "B.\r\n            claw hammer",
+        "option_c": "C.\r\n            plier",
+        "option_d": "D.\r\n            wheelbarrow",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "In the formation of sea breeze, wind blows from?",
+        "option_a": "A.\r\n            sky to land",
+        "option_b": "B.\r\n            sea to sky",
+        "option_c": "C.\r\n            land to sea",
+        "option_d": "D.\r\n            sea to land",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "Which component of fiber-optic connector has a provision of entry for the fibre along with the fixation\u00a0to connector housing?",
+        "option_a": "A.\r\n            coupling device",
+        "option_b": "B.\r\n            cable",
+        "option_c": "C.\r\n            ferrule",
+        "option_d": "D.\r\n            connector housing",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "In order to view the sun, the most suitable instrument to use is?",
+        "option_a": "A.\r\n            helioscope",
+        "option_b": "B.\r\n            telescope",
+        "option_c": "C.\r\n            stroboscope",
+        "option_d": "D.\r\n            sun meter",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "The eclipse of the moon occurs when?",
+        "option_a": "A.\r\n            the moon reflects the rays from the sun to the earth",
+        "option_b": "B.\r\n            the moon comes exactly between the earth and the sun",
+        "option_c": "C.\r\n            the earth comes exactly between the moon and the sun",
+        "option_d": "D.\r\n            the sun comes exactly between the earth and the moon",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "The gravitational pull on the moon is \\(\\frac{1}{6}\\) that of the earth. If a body weighs 6.0 N on the moon,\u00a0what will be the weight on the earth?",
+        "option_a": "A.\r\n            6.0 N",
+        "option_b": "B.\r\n            5.0 N",
+        "option_c": "C.\r\n            12.0 N",
+        "option_d": "D.\r\n            36.0 N",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "The amount of energy required to change a kilogram of ice block into water without a change in temperature is?",
+        "option_a": "A.\r\n            specific latent heat of fusion of ice",
+        "option_b": "B.\r\n            specific heat capacity of ice",
+        "option_c": "C.\r\n            heat capacity of ice",
+        "option_d": "D.\r\n            specific heat of vaporization of ice",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "Which expression gives magnetic flux?",
+        "option_a": "A.\r\n            qVB sin\\(\\theta\\)",
+        "option_b": "B.\r\n            \\(\\frac{\\mu \\phi I}{2 \\pi r}\\)",
+        "option_c": "C.\r\n            BA cos \\(\\theta\\)",
+        "option_d": "D.\r\n            -N \\(\\frac{d \\phi}{dt}\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "The graph of pressure (P) against the reciprocal of the volume (I/V) in Boyles's law is a?",
+        "option_a": "A.\r\n            hyperbola",
+        "option_b": "B.\r\n            parabola",
+        "option_c": "C.\r\n            curve",
+        "option_d": "D.\r\n            straight line",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "What quantity of heat is required to convert 20 g of ice at 0 \u00baC to water at the same temperature? (Specific latent heat of ice = 336 Jg\\(^{-1}\\))",
+        "option_a": "A.\r\n            7.06 x 10\\(^{3}\\)J",
+        "option_b": "B.\r\n            5.38 x 10\\(^{3}\\)J",
+        "option_c": "C.\r\n            6.72 x 10\\(^{3}\\)J",
+        "option_d": "D.\r\n            1.35 x 10\\(^{3}\\)J",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "A train of mass 1600 kg attains a speed of 25 ms\\(^{-1}\\) in 20 seconds. The power developed in the engine is?",
+        "option_a": "A.\r\n            2.5 KW",
+        "option_b": "B.\r\n            80 KW",
+        "option_c": "C.\r\n            25 KW",
+        "option_d": "D.\r\n            50 KW",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "The main factor which affects the speed of sound wave is the?",
+        "option_a": "A.\r\n            properties of the medium",
+        "option_b": "B.\r\n            amplitude of the sound wave",
+        "option_c": "C.\r\n            intensity of the sound wave",
+        "option_d": "D.\r\n            loudness of the sound wave",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option A"
+    },
+    {
+        "question": "A semiconductor is formed by?",
+        "option_a": "A.\r\n            co-ordinate bonds",
+        "option_b": "B.\r\n            electrovalent bonds",
+        "option_c": "C.\r\n            a substance free of bonds",
+        "option_d": "D.\r\n            covalent bonds",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "One of the following is a scalar quantity?",
+        "option_a": "A.\r\n            weight",
+        "option_b": "B.\r\n            momentum",
+        "option_c": "C.\r\n            potential energy",
+        "option_d": "D.\r\n            displacement",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option C"
+    },
+    {
+        "question": "The mercury column in the barometer at notational\u00a0 atmospheric pressure has a height of?",
+        "option_a": "A.\r\n            0.76 cm at see level",
+        "option_b": "B.\r\n            760 cm at sea level",
+        "option_c": "C.\r\n            7.6 cm at sea level",
+        "option_d": "D.\r\n            76 cm at sea level",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    },
+    {
+        "question": "If an object just begins to slide on a surface inclined at 30\u00ba\u00a0to the horizontal,the coefficient of friction is?",
+        "option_a": "A.\r\n            \u221a3",
+        "option_b": "B.\r\n            \\(\\frac{\u221a3}{2}\\)",
+        "option_c": "C.\r\n            \\(\\frac{1}{\u221a2}\\)",
+        "option_d": "D.\r\n            \\(\\frac{1}{\u221a3}\\)",
+        "option_e": "",
+        "correct_option": "Correct Answer: Option D"
+    }
+]

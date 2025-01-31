@@ -1,0 +1,865 @@
+from django.contrib import admin
+from .models import User
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'is_active', 'is_staff', 'date_joined')
+    search_fields = ('username', 'email')
+    list_filter = ('is_active', 'is_staff')
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django.conf import settings
+
+class User(AbstractUser):
+    ROLE_CHOICES = (
+        ('Admin', 'Admin'),
+        ('Student', 'Student'),
+    )
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Student')
+
+    def __str__(self):
+        return self.username
+
+class Subject(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class Question(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    question_text = models.TextField()
+    options = models.JSONField()  # Stores options as JSON
+    correct_option = models.IntegerField()
+    explanation = models.TextField()
+
+    def __str__(self):
+        return f"Question: {self.question_text[:50]}..."
+
+class MockExam(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    subjects = models.ManyToManyField(Subject)
+    start_time = models.DateTimeField(auto_now_add=True)
+    duration = models.PositiveIntegerField()  # Duration in minutes
+    status = models.CharField(max_length=50, default='ongoing')
+
+    def __str__(self):
+        return f"MockExam for {self.user.username}"
+
+class MockExamQuestion(models.Model):
+    mock_exam = models.ForeignKey(MockExam, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    user_answer = models.IntegerField(null=True, blank=True)
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Exam Question: {self.question.question_text[:50]}..."from rest_framework.permissions import BasePermission
+
+class IsAdmin(BasePermission):
+    def has_permission(self, request, view):
+        return request.user and request.user.role == "Admin"
+
+class IsStudent(BasePermission):
+    def has_permission(self, request, view):
+        return request.user and request.user.role == "Student"
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
+from .models import MockExam, MockExamQuestion, Question, Subject
+
+User = get_user_model()
+
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password', 'role']
+    
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password'],
+            role=validated_data.get('role', 'Student'),
+        )
+        return user
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'role']
+
+class SubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        fields = ['id', 'name']
+
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ['id', 'subject', 'question_text', 'options']
+
+class MockExamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MockExam
+        fields = ['id', 'user', 'subjects', 'start_time', 'duration', 'status']
+
+class MockExamQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MockExamQuestion
+        fields = ['id', 'mock_exam', 'question', 'user_answer', 'is_correct']from django.urls import path, include
+from . import views
+from .views import MockExamInitView, MockExamQuestionsView, MockExamSubmitView
+from rest_framework.routers import DefaultRouter
+from .views import (
+    RegisterView,
+    EmailVerificationView,
+    LoginView,
+    LogoutView,
+    PasswordResetRequestView,
+    PasswordResetView,
+    UserViewSet,
+    AdminRoleView,
+)
+
+# Initialize the DefaultRouter
+router = DefaultRouter()
+router.register(r'users', UserViewSet)
+
+# Combine all URL patterns
+urlpatterns = [
+    path('register/', RegisterView.as_view(), name='register'),
+    path(
+        'email-verification/<str:uidb64>/<str:token>/',
+        EmailVerificationView.as_view(),
+        name='email-verification',
+    ),
+    path('password-reset-request/', PasswordResetRequestView.as_view(), name='password-reset-request'),
+    path('password-reset/<str:token>/', PasswordResetView.as_view(), name='password-reset'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('admin/roles/', views.AdminRoleView.as_view(), name='admin-roles'),
+    path('mock-exams/init/', MockExamInitView.as_view(), name='mock_exam_init'),
+    path('mock-exams/<int:mock_exam_id>/questions/', MockExamQuestionsView.as_view(), name='mock_exam_questions'),
+    path('mock-exams/<int:mock_exam_id>/submit/', MockExamSubmitView.as_view(), name='mock_exam_submit'),
+
+    # Include router URLs for UserViewSet
+    path('', include(router.urls)),
+]
+import logging
+import base64
+from itsdangerous import URLSafeTimedSerializer
+from django.conf import settings
+from django.core.mail import send_mail
+from django.contrib.auth import get_user_model
+from rest_framework.authtoken.models import Token
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from .serializers import RegisterSerializer, UserSerializer
+from .models import User
+from .permissions import IsAdmin, IsStudent
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from .models import MockExam, MockExamQuestion, Question, Subject
+from .serializers import MockExamSerializer, QuestionSerializer
+import random
+from datetime import timedelta, datetime
+from django.utils import timezone
+
+User = get_user_model()
+
+# Initialize logger
+logger = logging.getLogger(__name__)
+
+# Helper to generate secure UID
+def generate_uidb64(email):
+    return base64.urlsafe_b64encode(email.encode()).decode()
+
+# Helper to generate secure tokens
+def generate_email_token(user):
+    serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
+    return serializer.dumps(user.email, salt="email-verification")
+
+# Helper to verify secure tokens
+def verify_email_token(token, max_age=3600):
+    serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
+    try:
+        email = serializer.loads(token, salt="email-verification", max_age=max_age)
+        return email
+    except Exception:
+        return None
+
+# Helper to send email verification
+def send_verification_email(user):
+    try:
+        token = generate_email_token(user)
+        uidb64 = generate_uidb64(user.email)
+        verification_url = f"http://127.0.0.1:8000/api/accounts/email-verification/{uidb64}/{token}/"
+        send_mail(
+            subject="Email Verification for Your Account",
+            message=f"Click the link below to verify your email:\n{verification_url}",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+            fail_silently=False,
+        )
+    except Exception as e:
+        logger.error(f"Failed to send verification email to {user.email}: {str(e)}")
+        raise
+
+
+# Registration view
+class RegisterView(generics.CreateAPIView):
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        user = User.objects.get(username=response.data['username'])
+        user.is_active = False  # Make the user inactive until email verification
+        user.save()
+
+        send_verification_email(user)
+
+        return Response(
+            {"message": "User registered successfully. Check your email for verification."},
+            status=status.HTTP_201_CREATED,
+        )
+
+# Email verification view
+class EmailVerificationView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, uidb64, token):
+        try:
+            email = base64.urlsafe_b64decode(uidb64).decode()
+            if not email:
+                return Response({"error": "Invalid UID."}, status=status.HTTP_400_BAD_REQUEST)
+            
+            email_verified = verify_email_token(token)
+            if email_verified != email:
+                return Response({"error": "Invalid or expired token."}, status=status.HTTP_400_BAD_REQUEST)
+
+            user = User.objects.filter(email=email).first()
+            if not user:
+                return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+            user.is_active = True
+            user.save()
+
+            return Response({"message": "Email verified successfully."}, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(f"Error during email verification: {str(e)}")
+            return Response({"error": "Something went wrong."}, status=status.HTTP_400_BAD_REQUEST)
+
+# Login view
+class LoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if not username or not password:
+            return Response({"error": "Username and password are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.get(username=username)
+
+            if not user.check_password(password):
+                return Response({"error": "Invalid credentials."}, status=status.HTTP_400_BAD_REQUEST)
+
+            if not user.is_active:
+                return Response({"error": "Account is inactive. Please verify your email."}, status=status.HTTP_403_FORBIDDEN)
+
+            # Generate a new token
+            token, _ = Token.objects.get_or_create(user=user)
+
+            return Response({"token": token.key}, status=status.HTTP_200_OK)
+
+        except User.DoesNotExist:
+            return Response({"error": "Invalid credentials."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PasswordResetRequestView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get("email")
+        if not email:
+            return Response({"error": "Email is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = User.objects.filter(email=email).first()
+        if not user:
+            return Response({"error": "User with this email does not exist."}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            token = generate_email_token(user)
+            reset_url = f"http://127.0.0.1:8000/api/accounts/password-reset/{token}/"
+
+            send_mail(
+                subject="Password Reset Request",
+                message=f"Click the link below to reset your password:\n{reset_url}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+
+            return Response({"message": "Password reset requested"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(f"Error sending password reset email: {str(e)}")
+            return Response({"error": "Failed to process password reset request."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class PasswordResetView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, token):
+        logger.debug(f"Received token: {token}")
+        password = request.data.get("password")
+        if not password:
+            return Response({"error": "Password is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            email = verify_email_token(token)
+            logger.debug(f"Decoded email: {email}")
+            if not email:
+                return Response({"error": "Invalid or expired token."}, status=status.HTTP_400_BAD_REQUEST)
+
+            user = User.objects.filter(email=email).first()
+            if not user:
+                return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+            user.set_password(password)
+            user.save()
+
+            return Response({"message": "Password reset successful"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(f"Error resetting password: {str(e)}")
+            return Response({"error": "Failed to reset password."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+# Logout view
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        # Ensure token is provided
+        auth_header = request.headers.get('Authorization')
+        if not auth_header:
+            logger.error("Authorization header is missing")
+            return Response({"error": "Authorization header is required."}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # Extract token from the header
+        token = auth_header.split(' ')[1] if len(auth_header.split(' ')) == 2 else None
+        if not token:
+            logger.error("Token is missing in the Authorization header")
+            return Response({"error": "Token is required."}, status=status.HTTP_401_UNAUTHORIZED)
+
+        try:
+            # Try to retrieve the token from the database
+            token_obj = Token.objects.get(key=token)
+            logger.debug(f"Token found: {token_obj.key}")
+            # Delete the token to log out
+            token_obj.delete()
+            logger.debug(f"User logged out: {request.user.username}")
+            return Response({"message": "Logged out successfully."}, status=status.HTTP_200_OK)
+        except Token.DoesNotExist:
+            logger.error(f"Invalid token: {token}")
+            return Response({"error": "Invalid token."}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            logger.error(f"Error during logout: {str(e)}")
+            return Response({"error": "Logout failed."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    @action(detail=False, methods=['get'], permission_classes=[IsAdmin])
+    def students(self, request):
+        students = User.objects.filter(role="Student")
+        serializer = self.get_serializer(students, many=True)
+        return Response(serializer.data)
+class AdminRoleView(APIView):
+    def post(self, request):
+        # Your logic for handling the role assignment
+        return Response({"message": "Roles assigned successfully."}, status=status.HTTP_200_OK)
+    
+
+class MockExamInitView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        subjects = request.data.get('subjects', [])
+        duration = request.data.get('duration', 30)  # Default to 30 mins
+
+        if not subjects:
+            return Response({"error": "Subjects are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        mock_exam = MockExam.objects.create(user=user, duration=duration)
+        mock_exam.subjects.add(*Subject.objects.filter(id__in=subjects))
+        mock_exam.save()
+
+        return Response(MockExamSerializer(mock_exam).data, status=status.HTTP_201_CREATED)
+
+class MockExamQuestionsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, mock_exam_id):
+        try:
+            mock_exam = MockExam.objects.get(id=mock_exam_id, user=request.user)
+            questions = Question.objects.filter(subject__in=mock_exam.subjects.all())
+            selected_questions = random.sample(list(questions), min(len(questions), 10))  # Limit to 10 questions
+            return Response(QuestionSerializer(selected_questions, many=True).data, status=status.HTTP_200_OK)
+        except MockExam.DoesNotExist:
+            return Response({"error": "Mock exam not found."}, status=status.HTTP_404_NOT_FOUND)
+
+class MockExamSubmitView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, mock_exam_id):
+        try:
+            mock_exam = MockExam.objects.get(id=mock_exam_id, user=request.user)
+            
+            # Use timezone-aware datetime for current time comparison
+            if timezone.now() > mock_exam.start_time + timedelta(minutes=mock_exam.duration):
+                return Response({"error": "Exam time has expired."}, status=status.HTTP_400_BAD_REQUEST)
+
+            answers = request.data.get('answers', [])
+            score = 0
+            detailed_results = []
+
+            for answer in answers:
+                question_id = answer.get('question_id')
+                user_answer = answer.get('user_answer')
+
+                try:
+                    question = Question.objects.get(id=question_id)
+                    is_correct = question.correct_option == user_answer
+                    MockExamQuestion.objects.create(
+                        mock_exam=mock_exam, question=question, user_answer=user_answer, is_correct=is_correct
+                    )
+                    if is_correct:
+                        score += 1
+
+                    detailed_results.append({
+                        "question_id": question.id,
+                        "question_text": question.question_text,
+                        "correct_option": question.correct_option,
+                        "user_answer": user_answer,
+                        "is_correct": is_correct,
+                        "explanation": question.explanation,
+                    })
+                except Question.DoesNotExist:
+                    continue
+
+            mock_exam.status = 'completed'
+            mock_exam.save()
+
+            return Response({
+                "score": score,
+                "total_questions": len(answers),
+                "results": detailed_results
+            }, status=status.HTTP_200_OK)
+        except MockExam.DoesNotExist:
+            return Response({"error": "Mock exam not found."}, status=status.HTTP_404_NOT_FOUND)from django.db import models
+
+class Curriculum(models.Model):
+    name = models.CharField(max_length=50, unique=True)  # WAEC, NECO, JAMB
+
+    def __str__(self):
+        return self.name
+
+
+class Subject(models.Model):
+    curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE, related_name='subjects')
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name} ({self.curriculum.name})"
+
+
+class Topic(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='topics')
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.subject.name})"
+
+
+class TopicContent(models.Model):
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='contents')
+    text = models.TextField(blank=True)
+    video = models.FileField(upload_to='videos/', blank=True, null=True)
+    pdf = models.FileField(upload_to='pdfs/', blank=True, null=True)
+
+    def __str__(self):
+        return f"Content for {self.topic.name}"
+
+
+class PracticeQuestion(models.Model):
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='practice_questions')
+    question = models.TextField()
+    option_a = models.CharField(max_length=255)
+    option_b = models.CharField(max_length=255)
+    option_c = models.CharField(max_length=255)
+    option_d = models.CharField(max_length=255)
+    option_e = models.CharField(max_length=255)
+    correct_option = models.CharField(max_length=1)  # A, B, C, D, E
+    explanation = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.question
+
+
+class PastQuestion(models.Model):
+    YEARS = [(year, str(year)) for year in range(1998, 2025)]  # Predefined list of years
+
+    curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE, related_name='past_questions')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='past_questions')
+    year = models.PositiveIntegerField(choices=YEARS)  # Add predefined year choices
+    is_theory = models.BooleanField(default=False)
+    question = models.TextField()
+    option_a = models.CharField(max_length=255, blank=True, null=True)
+    option_b = models.CharField(max_length=255, blank=True, null=True)
+    option_c = models.CharField(max_length=255, blank=True, null=True)
+    option_d = models.CharField(max_length=255, blank=True, null=True)
+    option_e = models.CharField(max_length=255, blank=True, null=True)
+    correct_option = models.CharField(max_length=1, blank=True, null=True)  # A, B, C, D, E
+    explanation = models.TextField(blank=True, null=True)
+    answer = models.TextField(blank=True, null=True)  # For theory questions
+
+    def __str__(self):
+        return f"{self.subject.name} ({self.year})"
+from rest_framework import serializers
+from .models import Curriculum, Subject, Topic, TopicContent, PracticeQuestion, PastQuestion
+
+class CurriculumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Curriculum
+        fields = '__all__'
+
+
+class SubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        fields = '__all__'
+
+
+class TopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = '__all__'
+
+
+class TopicContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TopicContent
+        fields = '__all__'
+
+
+class PracticeQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PracticeQuestion
+        fields = '__all__'
+
+
+class PastQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PastQuestion
+        fields = '__all__'
+        
+
+    def validate(self, data):
+        if data.get('is_theory'):
+            if not data.get('question'):
+                raise serializers.ValidationError({"question": "Theory questions require a question field."})
+        else:
+            required_fields = ['option_a', 'option_b', 'option_c', 'option_d', 'correct_option']
+            missing_fields = [field for field in required_fields if not data.get(field)]
+            if missing_fields:
+                raise serializers.ValidationError({field: f"{field} is required for MCQs." for field in missing_fields})
+        return data.  from django.urls import path
+from . import views
+urlpatterns = [
+    path('curricula/', views.CurriculumListCreateView.as_view(), name='curricula'),
+    path('subjects/<int:curriculum_id>/', views.SubjectListCreateView.as_view(), name='subjects'),
+    path('topics/<int:subject_id>/', views.TopicListCreateView.as_view(), name='topics'),
+    path('topics/<int:topic_id>/content/', views.TopicContentView.as_view(), name='topic_content'),
+    path('topics/<int:topic_id>/questions/', views.PracticeQuestionView.as_view(), name='practice_questions'),
+    path('past-questions/', views.PastQuestionView.as_view(), name='past_questions'),
+    path('past-questions/subject/<int:subject_id>/', views.PastQuestionView.as_view(), name='past_questions_by_subject'),
+    path('past-questions/curriculum/<int:curriculum_id>/', views.PastQuestionView.as_view(), name='past_questions_by_curriculum'),
+    path('past-questions/year/<int:year>/', views.PastQuestionView.as_view(), name='past_questions_by_year'),
+]
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Curriculum, Subject, Topic, TopicContent, PracticeQuestion, PastQuestion
+from rest_framework.parsers import MultiPartParser, FormParser
+from .serializers import (
+    CurriculumSerializer,
+    SubjectSerializer,
+    TopicSerializer,
+    TopicContentSerializer,
+    PracticeQuestionSerializer,
+    PastQuestionSerializer,
+)
+
+class CurriculumListCreateView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        curricula = Curriculum.objects.all()
+        serializer = CurriculumSerializer(curricula, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CurriculumSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SubjectListCreateView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, curriculum_id):
+        subjects = Subject.objects.filter(curriculum_id=curriculum_id)
+        serializer = SubjectSerializer(subjects, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, curriculum_id):
+        data = request.data
+        data['curriculum'] = curriculum_id
+        serializer = SubjectSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TopicListCreateView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, subject_id):
+        topics = Topic.objects.filter(subject_id=subject_id)
+        serializer = TopicSerializer(topics, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, subject_id):
+        data = request.data
+        data['subject'] = subject_id
+        serializer = TopicSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TopicContentView(APIView):
+    authentication_classes = []
+    permission_classes = []
+    parser_classes = [MultiPartParser, FormParser]  # Ensure handling of form data with files
+
+    def get(self, request, topic_id):
+        # Fetch content related to the topic
+        content = TopicContent.objects.filter(topic_id=topic_id)
+        serializer = TopicContentSerializer(content, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, topic_id):
+        # Create a mutable copy of the data
+        data = request.data.copy()
+        data['topic'] = topic_id  # Add the topic ID to the data
+
+        serializer = TopicContentSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PracticeQuestionView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, topic_id):
+        questions = PracticeQuestion.objects.filter(topic_id=topic_id)
+        serializer = PracticeQuestionSerializer(questions, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, topic_id):
+        data = request.data
+        data['topic'] = topic_id
+        serializer = PracticeQuestionSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PastQuestionView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, *args, **kwargs):
+        # Check for URL kwargs first
+        subject_id = kwargs.get('subject_id')
+        curriculum_id = kwargs.get('curriculum_id')
+        year = kwargs.get('year')
+
+        # If not in kwargs, check query parameters
+        if not subject_id:
+            subject_id = request.query_params.get('subject')
+        if not curriculum_id:
+            curriculum_id = request.query_params.get('curriculum')
+        if not year:
+            year = request.query_params.get('year')
+
+        # Filter questions based on the provided parameters
+        queryset = PastQuestion.objects.all()
+
+        # Apply filters if provided
+        if subject_id:
+            queryset = queryset.filter(subject_id=subject_id)
+        
+        if curriculum_id:
+            # Assuming the relationship goes through subject
+            queryset = queryset.filter(subject__curriculum_id=curriculum_id)
+        
+        if year:
+            queryset = queryset.filter(year=year)
+
+        # If all parameters are provided, return filtered questions
+        if subject_id and curriculum_id and year:
+            serializer = PastQuestionSerializer(queryset, many=True)
+            return Response(serializer.data)
+        
+        # If not all parameters are provided, return an empty list
+        return Response([])
+
+    def post(self, request):
+        # Existing post method remains the same
+        is_theory = request.data.get('is_theory', False)
+        if is_theory: # Theory question
+            required_fields = ['curriculum', 'subject', 'year', 'question']
+        else: # MCQ
+            required_fields = ['curriculum', 'subject', 'year', 'question', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_option']
+        
+        missing_fields = [field for field in required_fields if not request.data.get(field)]
+        
+        if missing_fields:
+            return Response({'error': f"Missing fields: {', '.join(missing_fields)}"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Serialize and save the question
+        serializer = PastQuestionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/accounts/', include('accounts.urls')),  # Include accounts app URLs with the correct prefix
+    path('api/datacollector/', include('datacollector.urls')),  # Include datacollector app URLs with the correct prefix
+]
+
+
+
+
+
+# models.py
+from django.db import models
+from django.conf import settings
+
+class UserPerformance(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='performances')
+    subject = models.ForeignKey('Subject', on_delete=models.CASCADE)
+    topic = models.ForeignKey('Topic', on_delete=models.CASCADE)
+    total_questions = models.PositiveIntegerField(default=0)
+    correct_answers = models.PositiveIntegerField(default=0)
+    time_spent = models.PositiveIntegerField(default=0)  # Time in seconds
+
+    @property
+    def accuracy(self):
+        if self.total_questions > 0:
+            return (self.correct_answers / self.total_questions) * 100
+        return 0
+
+    @property
+    def avg_time_per_question(self):
+        if self.total_questions > 0:
+            return self.time_spent / self.total_questions
+        return 0
+
+# serializers.py
+from rest_framework import serializers
+from .models import UserPerformance
+
+class UserPerformanceSerializer(serializers.ModelSerializer):
+    accuracy = serializers.ReadOnlyField()
+    avg_time_per_question = serializers.ReadOnlyField()
+
+    class Meta:
+        model = UserPerformance
+        fields = ['id', 'user', 'subject', 'topic', 'total_questions', 'correct_answers', 'time_spent', 'accuracy', 'avg_time_per_question']
+
+# views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.db.models import Avg, Sum, F
+from .models import UserPerformance, Subject, Topic
+from .serializers import UserPerformanceSerializer
+
+class CumulativePerformanceView(APIView):
+    def get(self, request):
+        user = request.user
+        performance_data = UserPerformance.objects.filter(user=user).values('subject__name').annotate(
+            total_questions=Sum('total_questions'),
+            correct_answers=Sum('correct_answers'),
+            time_spent=Sum('time_spent'),
+            accuracy=Avg(F('correct_answers') * 100.0 / F('total_questions'))
+        )
+        return Response(performance_data, status=status.HTTP_200_OK)
+
+class InsightsView(APIView):
+    def get(self, request):
+        user = request.user
+        insights = {
+            "time_spent": UserPerformance.objects.filter(user=user).aggregate(total_time=Sum('time_spent')),
+            "accuracy": UserPerformance.objects.filter(user=user).aggregate(average_accuracy=Avg(F('correct_answers') * 100.0 / F('total_questions'))),
+            "speed": UserPerformance.objects.filter(user=user).aggregate(average_speed=Avg(F('time_spent') / F('total_questions'))),
+        }
+        return Response(insights, status=status.HTTP_200_OK)
+
+class RecommendationsView(APIView):
+    def get(self, request):
+        user = request.user
+        weak_areas = UserPerformance.objects.filter(user=user, correct_answers__lt=F('total_questions') * 0.5).values(
+            'subject__name', 'topic__name', 'accuracy'
+        ).annotate(
+            time_spent=Sum('time_spent')
+        ).order_by('accuracy')
+        return Response(weak_areas, status=status.HTTP_200_OK)
+
+# urls.py
+from django.urls import path
+from .views import CumulativePerformanceView, InsightsView, RecommendationsView
+
+urlpatterns = [
+    path('performance/cumulative/', CumulativePerformanceView.as_view(), name='cumulative_performance'),
+    path('performance/insights/', InsightsView.as_view(), name='insights'),
+    path('performance/recommendations/', RecommendationsView.as_view(), name='recommendations'),
+]
